@@ -20,8 +20,7 @@ public class HotelReservation {
 		hotelsList.add(hotel);
 		return true;
 	}
-
-	public Hotel findCheapestHotel(LocalDate startDate, LocalDate endDate) {
+	public void findNumberOfWeekEndsDaysBetween(LocalDate startDate,LocalDate endDate) {
 		Predicate<LocalDate> isWeekend = date -> date.getDayOfWeek() == DayOfWeek.SATURDAY
 				|| date.getDayOfWeek() == DayOfWeek.SUNDAY;
 
@@ -32,6 +31,9 @@ public class HotelReservation {
 
 		numberOfWeekEnds = weekEnds.size();
 		numberOfWeekDays = (int) (daysBetween + 1) - numberOfWeekEnds;
+	}
+	public Hotel findCheapestHotel(LocalDate startDate, LocalDate endDate) {
+		findNumberOfWeekEndsDaysBetween(startDate, endDate);
 		int cheapestPrice = hotelsList.stream().mapToInt(hotel -> (int) (hotel.getWeekDayRate() * numberOfWeekDays)
 				+ (int) (hotel.getWeekEndRate() * numberOfWeekEnds)).min().orElse(Integer.MAX_VALUE);
 
@@ -41,6 +43,11 @@ public class HotelReservation {
 				.max(Comparator.comparing(Hotel::getRating)).orElse(null);
 		cheapestHotel.setRateForRegularCustomer(cheapestPrice);
 		return cheapestHotel;
+	}
+	
+	public Hotel findBestRatedHotel(LocalDate startDate,LocalDate endDate) {
+		findNumberOfWeekEndsDaysBetween(startDate, endDate);
+		return hotelsList.stream().max(Comparator.comparing(Hotel::getRating)).orElse(null);
 	}
 
 	public List<Hotel> getHotelList() {
