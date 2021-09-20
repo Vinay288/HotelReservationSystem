@@ -32,17 +32,32 @@ public class HotelReservation {
 		numberOfWeekEnds = weekEnds.size();
 		numberOfWeekDays = (int) (daysBetween + 1) - numberOfWeekEnds;
 	}
-	public Hotel findCheapestHotel(LocalDate startDate, LocalDate endDate) {
+	public Hotel findCheapestHotel(LocalDate startDate, LocalDate endDate,CustomerType customerType) {
+		Hotel cheapestHotel ;
 		findNumberOfWeekEndsDaysBetween(startDate, endDate);
+		if(customerType.equals(CustomerType.REGULAR_CUSTOMER)) {
 		int cheapestPrice = hotelsList.stream().mapToInt(hotel -> (int) (hotel.getWeekDayRate() * numberOfWeekDays)
 				+ (int) (hotel.getWeekEndRate() * numberOfWeekEnds)).min().orElse(Integer.MAX_VALUE);
 
-		Hotel cheapestHotel = hotelsList.stream()
+		cheapestHotel = hotelsList.stream()
 				.filter(hotel -> hotel.getWeekDayRate() * numberOfWeekDays
 						+ (hotel.getWeekEndRate() * numberOfWeekEnds) == cheapestPrice)
 				.max(Comparator.comparing(Hotel::getRating)).orElse(null);
 		cheapestHotel.setRateForRegularCustomer(cheapestPrice);
-		return cheapestHotel;
+		
+		}
+		else {
+			
+				int cheapestPrice = hotelsList.stream().mapToInt(hotel -> (int) (hotel.getRewardWeekdayRates() * numberOfWeekDays)
+						+ (int) (hotel.getRewardWeekEndrates() * numberOfWeekEnds)).min().orElse(Integer.MAX_VALUE);
+
+			cheapestHotel = hotelsList.stream()
+						.filter(hotel -> hotel.getRewardWeekdayRates() * numberOfWeekDays
+						+  (hotel.getRewardWeekEndrates() * numberOfWeekEnds) == cheapestPrice)
+						.max(Comparator.comparing(Hotel::getRating)).orElse(null);
+				cheapestHotel.setRateForRegularCustomer(cheapestPrice);		
+		}
+			return cheapestHotel;
 	}
 	
 	public Hotel findBestRatedHotel(LocalDate startDate,LocalDate endDate) {
