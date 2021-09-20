@@ -26,7 +26,7 @@ public class HotelReservationTest {
 	}
 
 	@Test
-	public void givenThreeHotel_WhenCorrect_ShoulReturnProperHotelName() {
+	public void givenThreeHotel_WhenCalledCheapestHotelMethodWithRegularCustomer_ShoulReturnBridgeWood() {
 		HotelReservation listOfHotels = new HotelReservation();
 		Hotel hotel1 = new Hotel("Lakewood", 110, 90,3,80,80);
 		Hotel hotel2 = new Hotel("Bridgewood", 150, 50, 4,110,50);
@@ -37,9 +37,26 @@ public class HotelReservationTest {
 		LocalDate date1 = LocalDate.of(2020, Month.SEPTEMBER, 11);
 		LocalDate date2 = LocalDate.of(2020, Month.SEPTEMBER, 12);
 
-		Hotel cheapestHotel = listOfHotels.findCheapestHotel(date1, date2);
+		Hotel cheapestHotel = listOfHotels.findCheapestHotel(date1, date2,CustomerType.REGULAR_CUSTOMER);
 		System.out.println(cheapestHotel);
 		Assert.assertEquals("Bridgewood", cheapestHotel.getHotelName());
+	}
+	
+	@Test
+	public void givenThreeHotel_WhenCalledCheapestHotelMethodWithRewardCustomer_ShoulReturnRidgeWood() {
+		HotelReservation listOfHotels = new HotelReservation();
+		Hotel hotel1 = new Hotel("Lakewood", 110, 90,3,80,80);
+		Hotel hotel2 = new Hotel("Bridgewood", 150, 50, 4,110,50);
+		Hotel hotel3 = new Hotel("Ridgewood", 220, 150, 5,100,40);
+		listOfHotels.addHotel(hotel1);
+		listOfHotels.addHotel(hotel2);
+		listOfHotels.addHotel(hotel3);
+		LocalDate date1 = LocalDate.of(2020, Month.SEPTEMBER, 11);
+		LocalDate date2 = LocalDate.of(2020, Month.SEPTEMBER, 12);
+
+		Hotel cheapestHotel = listOfHotels.findCheapestHotel(date1, date2,CustomerType.REWARD_CUSTOMER);
+		System.out.println(cheapestHotel);
+		Assert.assertEquals("Ridgewood", cheapestHotel.getHotelName());
 	}
 
 	@Test
