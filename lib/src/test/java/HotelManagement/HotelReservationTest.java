@@ -26,7 +26,7 @@ public class HotelReservationTest {
 	}
 
 	@Test
-	public void givenOneHotel_WhenCorrect_ShoulReturnProperHotelName() {
+	public void givenThreeHotel_WhenCorrect_ShoulReturnProperHotelName() {
 		HotelReservation listOfHotels = new HotelReservation();
 		Hotel hotel1 = new Hotel("Lakewood", 110, 90, 3);
 		Hotel hotel2 = new Hotel("Bridgewood", 150, 50, 4);
@@ -40,5 +40,21 @@ public class HotelReservationTest {
 		Hotel cheapestHotel = listOfHotels.findCheapestHotel(date1, date2);
 		System.out.println(cheapestHotel);
 		Assert.assertEquals("Bridgewood", cheapestHotel.getHotelName());
+	}
+	
+	@Test
+	public void givenThreeHotel_WhenCalledFindRatedHotel_ShouldreturnRidgeWood() {
+		HotelReservation listOfHotels = new HotelReservation();
+		Hotel hotel1 = new Hotel("Lakewood", 110, 90, 3);
+		Hotel hotel2 = new Hotel("Bridgewood", 150, 50, 4);
+		Hotel hotel3 = new Hotel("Ridgewood", 220, 150, 5);
+		listOfHotels.addHotel(hotel1);
+		listOfHotels.addHotel(hotel2);
+		listOfHotels.addHotel(hotel3);
+		LocalDate date1 = LocalDate.of(2020, Month.SEPTEMBER, 11);
+		LocalDate date2 = LocalDate.of(2020, Month.SEPTEMBER, 12);
+
+		Hotel bestHotel = listOfHotels.findBestRatedHotel(date1, date2);
+		Assert.assertEquals("Ridgewood", bestHotel.getHotelName());
 	}
 }
