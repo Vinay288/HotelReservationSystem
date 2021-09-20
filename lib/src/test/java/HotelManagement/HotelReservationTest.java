@@ -7,6 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 
 import org.junit.Assert;
@@ -14,21 +15,26 @@ import org.junit.Before;
 
 public class HotelReservationTest {
 
-	HotelReservation hotelReservation = new HotelReservation();
-
 	@Test
 	public void givenDetails_WhenCorrect_ShoulReturnTrue() {
 		HotelReservation hotelReservation = new HotelReservation();
-		boolean isValidHotel = hotelReservation.addHotel("Lakewood", 3000);
-		Assert.assertTrue(isValidHotel);
-
+		Hotel hotel = new Hotel("Lakewood", 110, 90, 3);
+		boolean isValidHotel = hotelReservation.addHotel(hotel);
+		assertTrue(isValidHotel);
 	}
 
 	@Test
-	public void givenDateRangeDetails_WhenCorrect_ShoulReturnTrue() {
-		LocalDate startDate = LocalDate.of(2021, Month.SEPTEMBER, 10);
-		LocalDate lastDate = LocalDate.of(2021, Month.SEPTEMBER, 11);
-		Hotel isValidHotel = hotelReservation.getCheapestHotel(startDate, lastDate);
-		assertEquals("Lakewood", isValidHotel.getHotelName());
+	public void givenOneHotel_WhenCorrect_ShoulReturnProperHotelName() {
+		HotelReservation listOfHotels = new HotelReservation();
+		Hotel hotel1 = new Hotel("Lakewood", 100, 0, 1);
+		Hotel hotel2 = new Hotel("Bridgewood", 150, 0, 2);
+		Hotel hotel3 = new Hotel("Ridgewood", 200, 0, 3);
+		listOfHotels.addHotel(hotel1);
+		listOfHotels.addHotel(hotel2);
+		listOfHotels.addHotel(hotel3);
+		LocalDateTime startDate = LocalDateTime.now();
+		LocalDateTime endDate = startDate.plusDays(2);
+		Hotel cheapest = listOfHotels.findCheapestHotel(startDate, endDate);
+		assertEquals("Lakewood", cheapest.getHotelName());
 	}
 }
