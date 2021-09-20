@@ -1,31 +1,30 @@
 package HotelManagement;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class HotelReservation {
-	List<Hotel> hotels = new ArrayList<Hotel>();
+	List<Hotel> hotelsList = new ArrayList<Hotel>();
 
-	public boolean addHotel(String hotelName, int rate) {
-		Scanner scanner = new Scanner(System.in);
-		List<Hotel> hotels = new ArrayList<Hotel>();
-		Hotel hotel = new Hotel("Name", 2000);
-		hotels.add(hotel);
+	public boolean addHotel(Hotel hotel) {
+		hotelsList.add(hotel);
 		return true;
 	}
 
-	public Hotel getCheapestHotel(LocalDate startDate, LocalDate lastDate) {
-		long daysBetween = ChronoUnit.DAYS.between(startDate, lastDate);
+	public Hotel findCheapestHotel(LocalDateTime startDate, LocalDateTime endDate) {
+		int noOfDays = startDate.compareTo(endDate);
+		double min = Double.MAX_VALUE;
+		Hotel cheapest = hotelsList.stream()
+				.min((hotel1, hotel2) -> (int) hotel1.getWeekDayRate() - (int) hotel2.weekDayRate).orElse(null);
+		return cheapest;
 
-		Hotel cheapestHotel = hotels.stream()
-				.min((n1, n2) -> n1.getRateForRegularCustomer() - n2.getRateForRegularCustomer()).orElse(null);
-		long cheapestRate = (daysBetween + 1) * cheapestHotel.getRateForRegularCustomer();
-		System.out
-				.println("Cheapest hotel name is :" + cheapestHotel.getHotelName() + "Total rate is :" + cheapestRate);
-		return cheapestHotel;
+	}
 
+	public List<Hotel> getHotelList() {
+		return hotelsList;
 	}
 }
