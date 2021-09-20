@@ -5,41 +5,41 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class HotelReservation {
 	List<Hotel> hotelsList = new ArrayList<Hotel>();
+	int numberOfWeekEnds, numberOfWeekDays;
 
 	public boolean addHotel(Hotel hotel) {
 		hotelsList.add(hotel);
-		System.out.println(hotelsList);
 		return true;
 	}
 
 	public Hotel findCheapestHotel(LocalDate startDate, LocalDate endDate) {
-		int noOfDays = endDate.compareTo(startDate);
-		int weekdayCounter = 0;
-		int weekendCounter = 0;
+		Predicate<LocalDate> isWeekend = date -> date.getDayOfWeek() == DayOfWeek.SATURDAY
+				|| date.getDayOfWeek() == DayOfWeek.SUNDAY;
 
-		for (LocalDate dateCounter = startDate; startDate.isEqual(endDate);) {
-			if (dateCounter.getDayOfWeek() == DayOfWeek.SATURDAY || dateCounter.getDayOfWeek() == DayOfWeek.SUNDAY)
-				weekendCounter++;
-			else
-				weekdayCounter++;
-			startDate=dateCounter.plusDays(1);
-		}
+		long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
 
-		final int weekdayCount = weekdayCounter;
-		final int weekendCount = weekendCounter;
-		int cheapestPrice = hotelsList.stream().mapToInt(
-				hotel -> (int) (hotel.getWeekDayRate() * weekdayCount) + (int) (hotel.getWeekEndRate() * weekendCount))
-				.min().orElse(Integer.MAX_VALUE);
-		System.out.println(cheapestPrice);
+		List<LocalDate> weekEnds = Stream.iterate(startDate, date -> date.plusDays(1)).limit(daysBetween + 1)
+				.filter((isWeekend)).collect(Collectors.toList());
 
-		Hotel cheapestHotel = hotelsList.stream().filter(hotel -> hotel.getWeekDayRate() * weekdayCount
-				+ (hotel.getWeekEndRate() * weekendCount) == cheapestPrice).findFirst().orElse(null);
+		numberOfWeekEnds = weekEnds.size();
+		numberOfWeekDays = (int) (daysBetween + 1) - numberOfWeekEnds;
+		int cheapestPrice = hotelsList.stream().mapToInt(hotel -> (int) (hotel.getWeekDayRate() * numberOfWeekDays)
+				+ (int) (hotel.getWeekEndRate() * numberOfWeekEnds)).min().orElse(Integer.MAX_VALUE);
+
+		Hotel cheapestHotel = hotelsList.stream()
+				.filter(hotel -> hotel.getWeekDayRate() * numberOfWeekDays
+						+ (hotel.getWeekEndRate() * numberOfWeekEnds) == cheapestPrice)
+				.max(Comparator.comparing(Hotel::getRating)).orElse(null);
+		cheapestHotel.setRateForRegularCustomer(cheapestPrice);
 		return cheapestHotel;
 	}
 
