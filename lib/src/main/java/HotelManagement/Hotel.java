@@ -20,6 +20,22 @@ public class Hotel {
 		this.rewardWeekEndrates=rewardWeekEndrates;
 	}
 
+	public int getRewardWeekdayRates() {
+		return rewardWeekdayRates;
+	}
+
+	public void setRewardWeekdayRates(int rewardWeekdayRates) {
+		this.rewardWeekdayRates = rewardWeekdayRates;
+	}
+
+	public int getRewardWeekEndrates() {
+		return rewardWeekEndrates;
+	}
+
+	public void setRewardWeekEndrates(int rewardWeekEndrates) {
+		this.rewardWeekEndrates = rewardWeekEndrates;
+	}
+
 	public int getWeekDayRate() {
 		return weekDayRate;
 	}
