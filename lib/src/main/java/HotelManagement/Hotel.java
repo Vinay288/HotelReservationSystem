@@ -5,11 +5,40 @@ package HotelManagement;
 
 public class Hotel {
 	String hotelName;
+	int weekDayRate;
+	int weekEndRate;
+	int rating;
 	int rateForRegularCustomer;
 
-	public Hotel(String hotelName, int rateForRegularCustomer) {
+	public Hotel(String hotelName, int weekDayRate, int weekEndRate, int rating) {
 		this.hotelName = hotelName;
-		this.rateForRegularCustomer = rateForRegularCustomer;
+		this.weekDayRate = weekDayRate;
+		this.weekEndRate = weekEndRate;
+		this.rating = rating;
+	}
+
+	public int getWeekDayRate() {
+		return weekDayRate;
+	}
+
+	public void setWeekDayRate(int weekDayRate) {
+		this.weekDayRate = weekDayRate;
+	}
+
+	public int getWeekEndRate() {
+		return weekEndRate;
+	}
+
+	public void setWeekEndRate(int weekEndRate) {
+		this.weekEndRate = weekEndRate;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
 
 	public String getHotelName() {
