@@ -20,7 +20,7 @@ public class HotelReservationTest {
 	@Test
 	public void givenDetails_WhenCorrect_ShoulReturnTrue() {
 		HotelReservation hotelReservation = new HotelReservation();
-		Hotel hotel = new Hotel("Lakewood", 110, 90, 3);
+		Hotel hotel = new Hotel("Lakewood", 110, 90, 3,100,50);
 		boolean isValidHotel = hotelReservation.addHotel(hotel);
 		assertTrue(isValidHotel);
 	}
@@ -28,9 +28,9 @@ public class HotelReservationTest {
 	@Test
 	public void givenThreeHotel_WhenCorrect_ShoulReturnProperHotelName() {
 		HotelReservation listOfHotels = new HotelReservation();
-		Hotel hotel1 = new Hotel("Lakewood", 110, 90, 3);
-		Hotel hotel2 = new Hotel("Bridgewood", 150, 50, 4);
-		Hotel hotel3 = new Hotel("Ridgewood", 220, 150, 5);
+		Hotel hotel1 = new Hotel("Lakewood", 110, 90,3,80,80);
+		Hotel hotel2 = new Hotel("Bridgewood", 150, 50, 4,110,50);
+		Hotel hotel3 = new Hotel("Ridgewood", 220, 150, 5,100,40);
 		listOfHotels.addHotel(hotel1);
 		listOfHotels.addHotel(hotel2);
 		listOfHotels.addHotel(hotel3);
@@ -41,13 +41,13 @@ public class HotelReservationTest {
 		System.out.println(cheapestHotel);
 		Assert.assertEquals("Bridgewood", cheapestHotel.getHotelName());
 	}
-	
+
 	@Test
 	public void givenThreeHotel_WhenCalledFindRatedHotel_ShouldreturnRidgeWood() {
 		HotelReservation listOfHotels = new HotelReservation();
-		Hotel hotel1 = new Hotel("Lakewood", 110, 90, 3);
-		Hotel hotel2 = new Hotel("Bridgewood", 150, 50, 4);
-		Hotel hotel3 = new Hotel("Ridgewood", 220, 150, 5);
+		Hotel hotel1 = new Hotel("Lakewood", 110, 90, 3,80,80);
+		Hotel hotel2 = new Hotel("Bridgewood", 150, 50, 4,110,50);
+		Hotel hotel3 = new Hotel("Ridgewood", 220, 150, 5,100,40);
 		listOfHotels.addHotel(hotel1);
 		listOfHotels.addHotel(hotel2);
 		listOfHotels.addHotel(hotel3);
