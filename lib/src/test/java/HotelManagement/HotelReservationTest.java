@@ -16,7 +16,7 @@ import org.junit.Assert;
 import org.junit.Before;
 
 public class HotelReservationTest {
-	static HotelReservation hotelReservation = new HotelReservation();
+	static HotelReservationImpl hotelReservation = new HotelReservationImpl();
 	static Hotel hotel1;
 	static Hotel hotel2;
 	static Hotel hotel3;
@@ -70,7 +70,7 @@ public class HotelReservationTest {
 	public void givenDate_WhenCorrect_ShouldReturnTrue() {
 		String date = "2020-09-11";
 		try {
-			boolean result = HotelReservation.validateDate(date);
+			boolean result = HotelReservationImpl.validateDate(date);
 			Assert.assertEquals(true, result);
 		} catch (HotelReservationException e) {
 
@@ -81,7 +81,7 @@ public class HotelReservationTest {
 	public void givenDate_WhenCorrect_ShouldCatchNullException() {
 		String date = null;
 		try {
-			boolean result = HotelReservation.validateDate(date);
+			boolean result = HotelReservationImpl.validateDate(date);
 		} catch (HotelReservationException e) {
 			Assert.assertEquals(HotelReservationException.ExceptionType.DATE_NULL, e.type);
 		}
@@ -91,7 +91,7 @@ public class HotelReservationTest {
 	public void givenDate_WhenInvalid_ShouldCatchInvalidException() {
 		String date = "12-1234-22";
 		try {
-			boolean result = HotelReservation.validateDate(date);
+			boolean result = HotelReservationImpl.validateDate(date);
 		} catch (HotelReservationException e) {
 			Assert.assertEquals(HotelReservationException.ExceptionType.DATE_INVALID, e.type);
 		}
@@ -101,7 +101,7 @@ public class HotelReservationTest {
 	public void givenCustomerType_WhenCorrect_ShouldReturnTrue() {
 		String customerType = "REWARDS_CUSTOMER";
 		try {
-			boolean result = HotelReservation.validateCustomerType(customerType);
+			boolean result = HotelReservationImpl.validateCustomerType(customerType);
 			Assert.assertEquals(true, result);
 		} catch (HotelReservationException e) {
 
@@ -112,7 +112,7 @@ public class HotelReservationTest {
 	public void givenCustomerType_WhenNull_ShouldCatchNullException() {
 		String customerType = null;
 		try {
-			boolean result = HotelReservation.validateCustomerType(customerType);
+			boolean result = HotelReservationImpl.validateCustomerType(customerType);
 
 		} catch (HotelReservationException e) {
 			Assert.assertEquals(HotelReservationException.ExceptionType.CUSTOMER_TYPE_NULL, e.type);
@@ -123,7 +123,7 @@ public class HotelReservationTest {
 	public void givenCustomerType_WhenInvalid_ShouldCatchInvalidException() {
 		String customerType = "hduhuas";
 		try {
-			boolean result = HotelReservation.validateCustomerType(customerType);
+			boolean result = HotelReservationImpl.validateCustomerType(customerType);
 
 		} catch (HotelReservationException e) {
 			Assert.assertEquals(HotelReservationException.ExceptionType.CUTOMER_TYPE_INVALID, e.type);
